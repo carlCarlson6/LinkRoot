@@ -28,7 +28,6 @@ const readTypeOrmDataSourceConfig = (): TypeOrmDataSourceConfig => {
         entities: [RootEntity, LinkEntity],
         synchronize: true,
     };
-    console.log("type orm config", config);
     return config;
 };
 const buildDataSource = (config: TypeOrmDataSourceConfig) => new DataSource({...config});

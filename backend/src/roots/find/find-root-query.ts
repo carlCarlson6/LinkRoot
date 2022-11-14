@@ -1,13 +1,12 @@
-import { UseCaseInput } from "../../shared/use-case";
+export class FindRootQuery {
+    public readonly slug: string
 
-export class FindRootQuery implements UseCaseInput {
-    constructor(
-        public readonly slug: string,
-    ) {
-        if (!slug) {
+    constructor(slug: string,) {
+        this.slug = slug;
+        if (!this.slug) {
             throw Error("invalid slug");
         }
-        if (slug.length === 0) {
+        if (this.slug.length === 0) {
             throw Error("invalid slug");
         }
     }
