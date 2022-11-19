@@ -1,17 +1,17 @@
 import {z} from "zod";
 import { toZod } from "tozod";
 
-export interface Root {
+export interface RootModel {
     slug:  string;
-    links: Link[];
+    links: LinkModel[];
 }
 
-export interface Link {
+export interface LinkModel {
     url:  string;
     text: string;
 }
 
-export const rootSchema: toZod<Root> = z.object({
+export const rootSchema: toZod<RootModel> = z.object({
     slug: z.string(),
     links: z.array(z.object({
         url: z.string(),
@@ -19,7 +19,7 @@ export const rootSchema: toZod<Root> = z.object({
     })),
 });
 
-export const mockRoot: Root = {
+export const mockRoot: RootModel = {
     slug: "carl",
     links: [
         {

@@ -1,12 +1,17 @@
 import { ReactNode } from "react";
-import { Container } from '@chakra-ui/react'
+import { Center } from '@chakra-ui/react'
 
 export default function Layout({children}: {children: ReactNode}) {
     return (
-        <>
-        <Container bg='#dee1e3'>
+        <Center 
+            aria-label="root-view-layout" 
+            borderRadius="xl"
+            border="1px"
+            flex=""
+            paddingTop="1rem"
+            paddingBottom="1rem"
+        >
             {children}
-        </Container>
-        </>
+        </Center>
     );
 }
