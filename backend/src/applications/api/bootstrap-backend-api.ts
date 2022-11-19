@@ -1,31 +1,29 @@
-import { ExpressFindRootEndpoint } from "../../roots/infrastructure/api/express-find-root-endpoint";
-import { getDataSource } from "../../roots/infrastructure/db/type-orm-data-source";
-import { ExpressServer } from "./express-server";
+import { ExpressServer } from "../../shared/infrastructure/express/express-server";
 import { config as readEnvConfig } from "dotenv";
-import { consoleLogRequestMiddleware, errorHandlingMiddleware, ExpressMiddleware } from "../../shared/infrastructure/express-middleware";
-import { ExpressEndpoint } from "../../shared/infrastructure/express-endpoint";
-import { DataSource } from "typeorm";
-
-export const buildEndpoints = (dependencies: {dataSource: DataSource}): ExpressEndpoint[] => [
-    ExpressFindRootEndpoint.build(dependencies.dataSource),
-];
-
-export const buildMiddlewares = (): ExpressMiddleware[] => [
-    errorHandlingMiddleware,
-    consoleLogRequestMiddleware
-];
+import { buildRootEndpoints } from "../../roots/infrastructure/api/build-root-endpoints";
+import { buildMiddlewares } from "../../shared/infrastructure/express/express-middleware";
+import { getMessageClient } from "../../shared/infrastructure/hermod/get-message-client";
+import { registerHandlers } from "./register-handler";
+import { getDataSourceWithEntities } from "./get-data-source-with-entities";
 
 export const bootstrapApiBackend = async () => {
     readEnvConfig();
     console.log("----------------\nstarting backend");
-    console.log("connecting to db")
-    const dataSource = await getDataSource().initialize();
+
+    console.log("connecting to db");
+    const dataSource = await getDataSourceWithEntities().initialize();
     
+    console.log("connecting to rabbitmq");
+    const messageClient = getMessageClient();
+    
+    console.log("adding event handlers");
+    registerHandlers({messageClient, dataSource});
+
     console.log("starting api");
     new ExpressServer()
         .applyMiddleware(buildMiddlewares())
-        .addEndpoints(buildEndpoints({dataSource}))
-        .configure()
+        .addEndpoints(buildRootEndpoints({dataSource, messageClient}))
+        .configure({port: process.env.API_PORT! ?Number(process.env.API_PORT!) : undefined})  // TODO - read from config
         .start();
     console.log("----------------");
 };
