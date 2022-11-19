@@ -9,7 +9,7 @@ export class HermodEventBus implements EventBus {
     
     async dispatch(event: DomainEvent): Promise<void> {
         try {
-            console.log("sending event", event);
+            console.log("sending event", event.eventName);
             const isPublished = await this.publisher.postMessage(event, event.eventName);
             if (!isPublished) {
                 throw new Error("publish post message failed");

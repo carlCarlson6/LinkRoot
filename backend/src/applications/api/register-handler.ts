@@ -26,5 +26,5 @@ export const registerHandlers = ({messageClient, dataSource}: Dependencies) => {
             queueName: RootMetricStored.name,
         }
     ];
-    handlersAndQueues.forEach(x => new HermodEventHandler(messageClient, x.handler).listen(x.queueName))
+    handlersAndQueues.forEach(x => new HermodEventHandler(messageClient, x.handler, dataSource).listen(x.queueName))
 };
