@@ -1,8 +1,7 @@
 export class FindRootQuery {
-    public readonly slug: string
-
-    constructor(slug: string,) {
-        this.slug = slug;
+    constructor(
+        public readonly slug: string
+    ) {
         if (!this.slug) {
             throw Error("invalid slug");
         }

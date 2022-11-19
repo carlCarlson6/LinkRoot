@@ -1,4 +1,4 @@
-import { Root } from "../../root";
+import { Root } from "../../core/root";
 
 export type ViewRootDto = {
     slug: string;
@@ -9,7 +9,7 @@ export type ViewRootDto = {
 };
 
 export const mapToDto = (root: Root): ViewRootDto => ({
-    slug: root.slug,
+    slug: root.slug.value,
     links: root.links.map(link => ({
         url: link.url,
         text: link.text,

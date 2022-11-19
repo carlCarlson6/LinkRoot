@@ -1,6 +1,6 @@
-import { Entity, Column, BaseEntity, FindOptionsWhere, OneToMany, PrimaryColumn, Unique } from "typeorm"
-import { Link } from "../../link";
-import { Root } from "../../root"
+import { Entity, Column, BaseEntity, FindOptionsWhere, OneToMany, PrimaryColumn } from "typeorm"
+import { Link } from "../../../core/link";
+import { Root, Slug } from "../../../core/root"
 import { LinkEntity } from "./link-entity";
 
 @Entity()
@@ -20,7 +20,7 @@ export class RootEntity extends BaseEntity {
 
 export const mapToDomain = (entity: RootEntity): Root => new Root(
     entity.id,
-    entity.slug,
+    new Slug(entity.slug),
     entity.owner,
     entity.links.map(l => new Link(
         l.id,
@@ -29,4 +29,7 @@ export const mapToDomain = (entity: RootEntity): Root => new Root(
     )),
 );
 
-export const partialMapToEntity = (partialDomain: Partial<Root>): FindOptionsWhere<RootEntity> => ({...partialDomain});
+export const partialMapToEntity = (partialDomain: Partial<Root>): FindOptionsWhere<RootEntity> => ({
+    ...partialDomain,
+    slug: partialDomain.slug?.value
+});

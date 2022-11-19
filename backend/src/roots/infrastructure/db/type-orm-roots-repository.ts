@@ -1,14 +1,18 @@
 import { DataSource } from "typeorm"
-import {IMaybe, none, some} from "typescript-monads";
-import { Root } from "../../root";
-import { RootsRepository } from "../../roots-repository";
-import { mapToDomain, partialMapToEntity, RootEntity } from "./root-entity";
-import { LinkEntity } from "./link-entity";
+import {IMaybe, IResult, none, some} from "typescript-monads";
+import { Root } from "../../core/root";
+import { RootsRepository } from "../../core/roots-repository";
+import { LinkEntity } from "./models/link-entity";
+import { mapToDomain, partialMapToEntity, RootEntity } from "./models/root-entity";
 
-export class SupabaseRootsRepository implements RootsRepository {
+export class TypeOrmRootsRepository implements RootsRepository {
     constructor(
         private readonly dataSource: DataSource
     ) {}
+
+    save(root: Root): Promise<IResult<{}, Error>> {
+        throw new Error("Method not implemented.");
+    }
 
     async read(filter: Partial<Root>): Promise<IMaybe<Root>> {
         const rootEntity = await this.dataSource.getRepository(RootEntity).findOneBy(partialMapToEntity(filter));
