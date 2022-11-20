@@ -1,4 +1,4 @@
 import "reflect-metadata";
-import { bootstrapApiBackend } from "./applications/api/bootstrap-backend-api";
+import { bootrapBackend } from "./applications";
 
-bootstrapApiBackend();
+bootrapBackend();

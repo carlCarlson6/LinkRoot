@@ -1,6 +1,6 @@
 import { MessageClient } from "@khaosdoctor/hermod";
 import { EventBus } from "../../core/events/event-bus";
-import { DomainEvent } from "../../core/events/event";
+import { DomainEvent } from "../../core/events/domain-event";
 
 export class HermodEventBus implements EventBus {
     constructor(

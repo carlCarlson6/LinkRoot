@@ -1,4 +1,4 @@
-export class FindRootQuery {
+export class RootBySlugQuery {
     constructor(
         public readonly slug: string
     ) {

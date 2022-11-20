@@ -1,9 +1,8 @@
-import e from "express";
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
-import { RootMetric } from "../core/root-metric";
+import { RootVisitMetric } from "../core/root-visit-metric";
 
 @Entity()
-export class MetricEntity extends BaseEntity {
+export class VisitMetricEntity extends BaseEntity {
     @PrimaryColumn({unique: true})
     id!: string;
 
@@ -23,8 +22,8 @@ export class MetricEntity extends BaseEntity {
     metadata!: string;
 }
 
-export const mapRootMetricToEntity = (domain: RootMetric) => {
-    const entity = new MetricEntity();
+export const mapRootVisitMetricToEntity = (domain: RootVisitMetric) => {
+    const entity = new VisitMetricEntity();
     entity.id = domain.id;
     entity.sessionId = domain.sessionId;
     entity.entityType = "root";

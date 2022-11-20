@@ -1,7 +1,8 @@
 import { MessageClient } from "@khaosdoctor/hermod";
-import { BaseEntity, Column, DataSource, Entity, PrimaryColumn } from "typeorm";
-import { DomainEvent } from "../../core/events/event";
+import { DataSource } from "typeorm";
+import { DomainEvent } from "../../core/events/domain-event";
 import { EventHandler } from "../../core/events/event-handler";
+import { UnprocessedEvent } from "./unprocessed-event";
 
 export class HermodEventHandler {
     constructor(
@@ -39,20 +40,3 @@ export class HermodEventHandler {
     }
 }
 
-@Entity()
-export class UnprocessedEvent extends BaseEntity {
-    @PrimaryColumn({unique:true})
-    eventId!: string;
-
-    @Column()
-    eventName!: string;
-
-    @Column({type:"json"})
-    eventPayload!: string;
- 
-    @Column()
-    createdAt!: Date;
-
-    @Column({type:"json"})
-    error!: string;
-}

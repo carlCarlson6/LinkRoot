@@ -1,4 +1,4 @@
-import { DomainEvent } from "../../shared/core/events/event";
+import { DomainEvent } from "../../shared/core/events/domain-event";
 
 export class RootMetricStored implements DomainEvent {
     public readonly eventName = RootMetricStored.name;

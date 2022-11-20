@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
 import { mapToDto } from "../../infrastructure/api/view-root-dto";
 import { ExpressEndpoint } from "../../../shared/infrastructure/express/express-endpoint";
-import { FindRootQuery } from "../find-root-query";
-import { RootNotFound } from "../root-not-found";
+import { RootBySlugQuery } from "../core/root-by-slug-query";
+import { RootNotFound } from "../core/root-not-found";
 import { DomainError } from "../../../shared/core/domain-error";
-import { FindRootOkResult, FindRootUseCase } from "../find-root";
+import { VisitRootUseCase } from "../core/visit-root-use-case";
 import { RequestMetadata } from "../../../shared/contracts/request-metadata";
+import { VisitRootOkResult } from "../core/visit-root-ok-result";
 
 export class ExpressGetRootEndpoint extends ExpressEndpoint {
     constructor(
-        private readonly useCase: FindRootUseCase,
+        private readonly useCase: VisitRootUseCase,
     ) {
         super("/api/root");
     }
@@ -22,7 +23,7 @@ export class ExpressGetRootEndpoint extends ExpressEndpoint {
 
     async whenCalled(request: Request, response: Response): Promise<void> {
         console.log(request.ip, request.httpVersion);
-        const query = new FindRootQuery(request.params.slug);
+        const query = new RootBySlugQuery(request.params.slug);
         const result = await this.useCase.execute(query);
         result.match({
             ok: outputFunc => this.handleSuccess(request, response, outputFunc),
@@ -30,7 +31,7 @@ export class ExpressGetRootEndpoint extends ExpressEndpoint {
         });
     }
 
-    async handleSuccess(request: Request, response: Response, getRoot: (metadata: RequestMetadata) => Promise<FindRootOkResult>) {
+    async handleSuccess(request: Request, response: Response, getRoot: (metadata: RequestMetadata) => Promise<VisitRootOkResult>) {
         const {root, correlationId} = await getRoot({ip: request.ip, httpVersion: request.httpVersion});
         return response.status(200).send({
             ...mapToDto(root),

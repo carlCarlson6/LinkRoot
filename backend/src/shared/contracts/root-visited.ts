@@ -1,4 +1,4 @@
-import { DomainEvent } from "../core/events/event";
+import { DomainEvent } from "../core/events/domain-event";
 import { RequestMetadata } from "./request-metadata";
 
 export class RootVisited implements DomainEvent {

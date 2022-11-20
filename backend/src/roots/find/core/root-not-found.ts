@@ -1,4 +1,4 @@
-import { DomainError } from "../../shared/core/domain-error";
+import { DomainError } from "../../../shared/core/domain-error";
 
 export class RootNotFound extends DomainError {
     constructor(slug: string) {
