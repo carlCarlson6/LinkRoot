@@ -34,7 +34,7 @@ export class HermodEventHandler {
         unprocessedEvent.eventName = domainEvent.eventName;
         unprocessedEvent.eventPayload = JSON.stringify(domainEvent);
         unprocessedEvent.createdAt = new Date();
-        unprocessedEvent.error = JSON.stringify({name: error.name, message: error.name, stack: error.stack});
+        unprocessedEvent.error = JSON.stringify({name: error.name, message: error.message, stack: error.stack});
 
         await this.dataSource.getRepository(UnprocessedEvent).save(unprocessedEvent);
     }
