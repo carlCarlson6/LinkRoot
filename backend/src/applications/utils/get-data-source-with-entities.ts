@@ -1,4 +1,5 @@
-import { VisitMetricEntity } from "../../metrics/infrastructure/metric-entity";
+import { CalculatedVisitsMetricEntity } from "../../metrics/infrastructure/calculated-visits-metric-entity";
+import { VisitMetricEntity } from "../../metrics/infrastructure/visit-metric-entity";
 import { LinkEntity } from "../../roots/infrastructure/db/models/link-entity";
 import { RootEntity } from "../../roots/infrastructure/db/models/root-entity";
 import { UnprocessedEvent } from "../../shared/infrastructure/hermod/unprocessed-event";
@@ -11,5 +12,6 @@ export const getDataSourceWithEntities = () => {
         LinkEntity,
         VisitMetricEntity,
         UnprocessedEvent,
+        CalculatedVisitsMetricEntity
     ]);
 };
