@@ -6,5 +6,6 @@ export class RootMetricStored implements DomainEvent {
         public readonly eventId: string,
         public readonly producedAtMillis: number,
         public readonly rootMetricId: string,
+        public readonly rootId: string,
     ) {}
 }

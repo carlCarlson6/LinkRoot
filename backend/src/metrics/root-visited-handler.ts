@@ -13,24 +13,25 @@ export class RootVisitedHandler implements EventHandler<RootVisited> {
     ) {}
 
     async handle(domainEvent: RootVisited): Promise<void> {
-        const rootMetric: RootVisitMetric = {
-            id: randomUUID(),
-            sessionId: domainEvent.sessionId,
-            rootId: domainEvent.rootId,
-            storedAt: new Date(domainEvent.producedAtMillis*1000), // TODO - review how calculation is down 
-            metadata: domainEvent.metadata,
-        };
+        const rootMetric = new RootVisitMetric(
+            randomUUID(),
+            domainEvent.sessionId,
+            domainEvent.rootId,
+            new Date(domainEvent.producedAtMillis*1000), // TODO - review how calculation is down 
+            domainEvent.metadata,
+        );
         const result = await this.storeMetric(rootMetric);
         await result.match({
-            ok: async _ => await this.onOk(rootMetric.rootId),
+            ok: async _ => await this.onOk(rootMetric.rootId, rootMetric.id),
             fail: error => {throw error},
         });
     }
 
-    async onOk(rootId: string) {
+    async onOk(rootId: string, metricId: string) {
         await this.eventBus.dispatch(new RootMetricStored(
             randomUUID(), 
             Date.now(),
+            metricId,
             rootId,
         ));
         console.log("event handled");
