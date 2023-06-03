@@ -12,12 +12,12 @@ export class HermodEventBus implements EventBus {
             console.log("sending event", event.eventName);
             const isPublished = await this.publisher.postMessage(event, event.eventName);
             if (!isPublished) {
-                throw new Error("publish post message failed");
+                throw new Error("publish message failed");
             }
         }
         catch(error) {
-            let message = 'unknown Error'
-            if (error instanceof Error) message = error.message
+            let message = 'unknown Error';
+            if (error instanceof Error) message = error.message;
             throw new Error(`can not publush event ${event} - ${message}`);
         }
     }

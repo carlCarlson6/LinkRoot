@@ -10,13 +10,14 @@ export class RootMetricStoredHandler implements EventHandler<RootMetricStored> {
         private readonly store: StoreMetric,
     ) {}
 
+    // TODO - re think implementation - maybe get
     async handle(domainEvent: RootMetricStored): Promise<void> {
         const rootMetrics = await this.findAll(domainEvent.rootId);
         const result = await this.store(new CalculatedVisitsMetric(
             domainEvent.rootId,
             "root",
             rootMetrics.length,
-            new Date(domainEvent.producedAtMillis * 1000) // TODO  - review how to calculate it
+            new Date(domainEvent.producedAtMillis) // TODO  - review how to calculate it - load metric and increase +1
         ));
         result.mapFail(error => { throw error; });
     }

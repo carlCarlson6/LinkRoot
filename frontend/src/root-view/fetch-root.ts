@@ -3,7 +3,7 @@ import { mockRoot, RootModel, rootSchema } from "./root";
 const delay = (milliseconds: number) => new Promise(res => setTimeout(res, milliseconds));
 
 export const fetchMockRoot = async (slug: string): Promise<RootModel> => {
-    await delay(9999999999);
+    //await delay(9999999999);
     return mockRoot;
 }
 

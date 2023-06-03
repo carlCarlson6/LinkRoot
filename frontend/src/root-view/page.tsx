@@ -1,16 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom';
-import { feathRoot } from './fetch-root';
+import { feathRoot, fetchMockRoot } from './fetch-root';
 import { Spinner, Stack, Center } from '@chakra-ui/react'
 import { RootModel } from './root';
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import RootLinks from './root-links';
 
 export default function RootViewPage() {
     const { slug } = useParams();
     const { isLoading, error, data } = useQuery<RootModel, Error>({
         queryKey: ['fetchRoot', slug],
-        queryFn: () => feathRoot(slug!)
+        queryFn: () => fetchMockRoot(slug!)
     });
     
     if (isLoading) return (<Spinner size='xl' />);

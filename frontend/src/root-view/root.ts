@@ -24,7 +24,7 @@ export const mockRoot: RootModel = {
     links: [
         {
             url: "https://www.linkedin.com/in/carlos-acitores-deval-a3914a1b/",
-            text: "linkedin"
+            text: "linkedinaaaaaaaaaaaaaaaaaaaaaaaa"
         },
         {
             url: "https://github.com/carlCarlson6",

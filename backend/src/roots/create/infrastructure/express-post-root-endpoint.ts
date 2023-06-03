@@ -19,8 +19,8 @@ export class ExpressPostRootEndpoint extends ExpressEndpoint {
             (request, response) => this.whenCalled(request, response));
     }
 
-    async whenCalled(request: Request, response: Response): Promise<void> {
-        const result = await this.useCase.execute(request.body); // TODO - correct validate input from the body
+    async whenCalled(request: Request<any, any, CreateRootCommand>, response: Response): Promise<void> {
+        const result = await this.useCase.execute(request.body);
         result.match({
             ok: output => response.status(201).send({...mapToDto(output)}),
             fail: error => response.status(500).send({...error}),

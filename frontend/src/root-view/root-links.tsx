@@ -1,5 +1,5 @@
 import { LinkModel } from "./root";
-import { Spinner, Stack, Button, Link, Center } from '@chakra-ui/react'
+import { Button, Link, Center } from '@chakra-ui/react'
 
 export default function RootLinks({links}: {links: LinkModel[]}) {
     return (<>{links.map(link => (
@@ -10,9 +10,11 @@ export default function RootLinks({links}: {links: LinkModel[]}) {
             borderRadius="3xl"
             key={link.text}
         >
-            <Button variant="#7f8b93" color="#606e79">
+            <Center>
+                <Button variant="#7f8b93" color="#606e79">
                     {link.text}
-            </Button>
+                </Button>
+            </Center>
         </Link>
     ))}</>);
 }

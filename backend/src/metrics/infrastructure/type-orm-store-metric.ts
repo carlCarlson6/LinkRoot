@@ -25,7 +25,7 @@ export const storeVisitMetricEntityWithTypeOrm = (dataSource: DataSource): Store
 type StoreCalculatedVisitsMetricMetricEntity = (entity: CalculatedVisitsMetricEntity) => Promise<IResult<{}, DomainError>>;
 export const storeCalculatedVisitsMetricMetricEntityTypeOrm = (dataSource: DataSource): StoreCalculatedVisitsMetricMetricEntity => async (entity: CalculatedVisitsMetricEntity): Promise<IResult<{}, DomainError>> => {
     try {
-        await dataSource.getRepository(CalculatedVisitsMetricEntity).upsert(entity, []);
+        await dataSource.getRepository(CalculatedVisitsMetricEntity).save(entity, {});
         return ok({});
     }
     catch(e) {
